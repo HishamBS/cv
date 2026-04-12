@@ -591,17 +591,21 @@
 %   <Description>                                  [body text or \begin{cvitems}]
 % Usage: \cventry{<title>}{<institution>}{<date>}{<description>}
 % Any argument may be empty ({}).
-\newcommand*{\cventry}[4]{%
+%
+% NOTE: \newcommand (not \newcommand*) to allow \par in #4 (for cvitems, etc.).
+%       \ifstrempty (from etoolbox) is used instead of \ifempty because it is
+%       long-safe, allowing \par tokens in its branches.
+\newcommand{\cventry}[4]{%
   \par\vspace{2mm}\noindent
   {\entrytitlestyle{#1}}\par\noindent
-  \ifempty{#2}{%
-    \ifempty{#3}{}{{\entrydatestyle{#3}}\par}%
+  \ifstrempty{#2}{%
+    \ifstrempty{#3}{}{{\entrydatestyle{#3}}\par}%
   }{%
     {\entrypositionstyle{#2}}%
-    \ifempty{#3}{}{\ {\entrydatestyle{\textbar\ #3}}}%
+    \ifstrempty{#3}{}{\ {\entrydatestyle{\textbar\ #3}}}%
     \par
   }%
-  \ifempty{#4}{}{\vspace{0.5mm}#4\par}%
+  \ifstrempty{#4}{}{\vspace{0.5mm}#4\par}%
 }
 
 
