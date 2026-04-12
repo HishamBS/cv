@@ -23,10 +23,10 @@
 \DeclareOption{final}{\setlength\overfullrule{0pt}}
 % Inherit options of article
 \DeclareOption*{%
-  \PassOptionsToClass{\CurrentOption}{article}
+  \PassOptionsToClass{\CurrentOption}{extarticle}
 }
 \ProcessOptions\relax
-\LoadClass{article}
+\LoadClass{extarticle}
 
 
 %-------------------------------------------------------------------------------
@@ -169,30 +169,30 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{11.5pt}{14pt}\bodyfont\color{cvNameDark} #1}}
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{20pt}{24pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{20pt}{24pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{10.5pt}{13pt}\bodyfont\color{cvNameDark} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvBodyDark} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
 \newcommand*{\sectionstyle}[1]{{%
-  \fontsize{12pt}{14pt}\bodyfont\bfseries\color{cvAccent}%
+  \fontsize{11pt}{13pt}\bodyfont\bfseries\color{cvAccent}%
   \textls*[40]{\MakeUppercase{#1}}}%
 }
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10.5pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{9.5pt}{13pt}\bodyfontlight\upshape\color{cvBodyDark} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.8pt}{11pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{9pt}{12pt}\bodyfontlight\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfontlight\color{cvBodyDark} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvBodyDark} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -432,17 +432,19 @@
 % Usage: \makecvheader
 % NOTE: first + last name are combined into a single \MakeUppercase call to avoid
 %       space-token loss at the boundary between two OpenType-uppercased groups.
+% Uses {\centering ...\par} instead of \begin{center}...\end{center} to avoid
+% the extra \topsep and \partopsep that the center environment injects.
 \newcommand*{\makecvheader}[1][C]{%
-  \begin{center}
-    {\fontsize{22pt}{26pt}\headerfont\color{cvNameDark}%
+  {\centering
+    {\fontsize{20pt}{24pt}\headerfont\color{cvNameDark}%
       \MakeUppercase{\@firstname\ \@lastname}}\par
-    \vspace{1.2mm}
+    \vspace{1mm}%
     \ifthenelse{\isundefined{\@position}}{}{%
       \headerpositionstyle{\@position}\par
-      \vspace{1.2mm}%
-    }
-    \headersocialstyle{\makecvcontactline}\par
-  \end{center}
+      \vspace{1mm}%
+    }%
+    \headersocialstyle{\makecvcontactline}\par%
+  }%
 }
 
 % Define a footer for CV
@@ -460,9 +462,8 @@
 \newcommand{\cvsection}[1]{%
   \vspace{\acvSectionTopSkip}%
   \sectionstyle{#1}\par%
-  \vspace{0.8mm}%
+  \vspace{0.3mm}%
   {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
-  \vspace{0.4mm}%
   \phantomsection%
 }
 
