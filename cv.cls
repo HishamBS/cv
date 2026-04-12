@@ -160,13 +160,14 @@
 %-------------------------------------------------------------------------------
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
-% Open Sans is the document default (via [default] option above), so these
-% commands are mostly no-ops that retain the name for API compatibility.
+% Open Sans is the document default (via [default] option above). The opensans
+% package does not expose a \opensanslight command, so *light commands fall
+% back to regular — we don't rely on the light variant heavily.
 \newcommand*{\headerfont}{\opensans}
-\newcommand*{\headerfontlight}{\opensanslight}
+\newcommand*{\headerfontlight}{\opensans}
 \newcommand*{\footerfont}{\opensans}
 \newcommand*{\bodyfont}{\opensans}
-\newcommand*{\bodyfontlight}{\opensanslight}
+\newcommand*{\bodyfontlight}{\opensans}
 
 %-------------------------------------------------------------------------------
 %                Configuration for styles
