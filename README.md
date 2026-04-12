@@ -1,41 +1,29 @@
-# CV
+# Resume
+
+[Download Latest PDF](https://github.com/HishamBS/cv/releases/latest/download/resume.pdf)
 
 LaTeX resume built with a custom `resume.cls` document class, auto-compiled via GitHub Actions on every push to `main`.
 
 [![Build and Release Resume](https://github.com/HishamBS/cv/actions/workflows/release.yml/badge.svg)](https://github.com/HishamBS/cv/actions/workflows/release.yml)
 
-## Download
+## Build
 
-Grab the latest compiled PDF from [Releases](https://github.com/HishamBS/cv/releases/latest/download/resume.pdf) — no LaTeX toolchain required.
+Requires XeLaTeX:
+
+```bash
+xelatex resume.tex
+```
 
 ## Structure
 
-```
-.
-├── resume.tex                      Main document (personal info + layout)
-├── resume.cls                      Custom LaTeX class (stacked-entry, two-column ready)
-├── cv/
-│   ├── experience.tex              Professional experience (left column)
-│   ├── skills.tex                  Technical skills (right column)
-│   ├── education.tex               Education (right column)
-│   ├── certifications.tex          Certifications (right column)
-│   ├── courses.tex                 Courses & training (right column)
-│   └── earlier.tex                 Earlier experience (right column)
-└── .github/workflows/release.yml   CI: compile with XeLaTeX, attach PDF to release
-```
+- `resume.tex` — main document
+- `resume.cls` — custom document class (derived from russell.cls)
+- `cv/` — content sections (experience, skills, education, certifications, courses, earlier)
+- `.github/workflows/release.yml` — CI: compiles with XeLaTeX and attaches the PDF to a GitHub Release
 
-## Local build (optional)
+## Template
 
-Requires XeLaTeX and the TeX Live `fontawesome5`, `roboto`, and `sourcesanspro` packages:
-
-```bash
-latexmk -xelatex resume.tex
-```
-
-## Credits
-
-- `resume.cls` derived from [russell.cls](https://github.com/themagicalmammal/Resume) (LPPL 1.3c)
-- Workflow and file organization inspired by [hassanalwizrah/resume](https://github.com/hassanalwizrah/resume)
+Based on [themagicalmammal/Resume](https://github.com/themagicalmammal/Resume), with the workflow approach adapted from [hassanalwizrah/resume](https://github.com/hassanalwizrah/resume).
 
 ## License
 
