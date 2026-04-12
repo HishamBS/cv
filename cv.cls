@@ -430,17 +430,19 @@
 
 % Define a header for CV — uppercase name, title-case position, plain contact line.
 % Usage: \makecvheader
+% NOTE: first + last name are combined into a single \MakeUppercase call to avoid
+%       space-token loss at the boundary between two OpenType-uppercased groups.
 \newcommand*{\makecvheader}[1][C]{%
   \begin{center}
-    \headerfirstnamestyle{\@firstname}\ \headerlastnamestyle{\@lastname}\par
-    \vspace{1.4mm}
+    {\fontsize{22pt}{26pt}\headerfont\color{cvNameDark}%
+      \MakeUppercase{\@firstname\ \@lastname}}\par
+    \vspace{1.2mm}
     \ifthenelse{\isundefined{\@position}}{}{%
       \headerpositionstyle{\@position}\par
-      \vspace{1.8mm}%
+      \vspace{1.2mm}%
     }
     \headersocialstyle{\makecvcontactline}\par
   \end{center}
-  \vspace{1mm}
 }
 
 % Define a footer for CV
@@ -469,9 +471,8 @@
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
     \cvsection{Professional Summary}%
-    \par\vspace{1mm}%
+    \par%
     {\headerquotestyle{\justifying\@quote}\par}%
-    \vspace{1mm}%
   }%
 }
 
@@ -524,22 +525,24 @@
   \end{justify}
 }
 % Define a line of cv information(skill) — inline "Category: list" format
+% Explicit \hspace is used instead of \ because inter-group control spaces
+% between two font-changing groups occasionally get eaten.
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
-  {\skilltypestyle{#1:}}\ {\skillsetstyle{#2}}\par
+  {\skilltypestyle{#1:}}\hspace{0.35em}{\skillsetstyle{#2}}\par
 }
 
 % =========================================================================
 % Define an environment for cvitems(for cventry)
-% Relaxed spacing for readability — each bullet gets a small breathing room.
+% Tight but readable bullet spacing (fits on 1 page while still breathable)
 \newenvironment{cvitems}{%
-  \vspace{-0.8mm}%
+  \vspace{-1mm}%
   \begin{justify}%
-  \begin{itemize}[leftmargin=2.2ex, topsep=0.6mm, partopsep=0pt, itemsep=0.6mm, parsep=0pt]%
+  \begin{itemize}[leftmargin=2.2ex, topsep=0.4mm, partopsep=0pt, itemsep=0.3mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
     \renewcommand{\labelitemi}{\textbullet}%
 }{%
   \end{itemize}%
   \end{justify}%
-  \vspace{-0.5mm}%
+  \vspace{-0.8mm}%
 }
