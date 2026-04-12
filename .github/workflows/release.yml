@@ -3,6 +3,10 @@ name: Build and Release Resume
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
   workflow_dispatch:
 
 permissions:
@@ -20,6 +24,14 @@ jobs:
           root_file: resume.tex
           latexmk_use_xelatex: true
 
+      - name: Generate preview image
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+          pdftoppm -png -r 200 -f 1 -l 1 resume.pdf preview
+          mv preview-1.png resume_preview.png
+          ls -la resume.pdf resume_preview.png
+
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -32,6 +44,6 @@ jobs:
             SUFFIX=$((SUFFIX + 1))
           done
           COMMIT_SHA=$(git rev-parse --short HEAD)
-          gh release create "$TAG" resume.pdf \
+          gh release create "$TAG" resume.pdf resume_preview.png \
             --title "Resume $TAG" \
             --notes "Compiled from $COMMIT_SHA"
