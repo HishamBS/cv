@@ -499,6 +499,17 @@
   \ifstrempty{#2}{}{\ {\color{cvMuted}\textbar\ #2}}%
 }
 
+% Single-line compact entry — used for short items like certifications and
+% short courses where "Title — Issuer" fits on one logical line (wrapping
+% gracefully when narrow). Saves ~1 line per item vs a full \cventry.
+% Usage: \cvcompact{Certified Scrum Master}{Scrum Alliance}
+\newcommand*{\cvcompact}[2]{%
+  \par\vspace{1.3mm}\noindent
+  {\entrytitlestyle{#1}}%
+  \ifstrempty{#2}{}{\ {\entrydatestyle{\textendash\ #2}}}%
+  \par
+}
+
 % =========================================================================
 % Define an environment for cventry (stacked layout — works in any column width)
 \newenvironment{cventries}{%
