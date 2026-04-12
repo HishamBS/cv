@@ -175,37 +175,37 @@
 % Configure styles for each CV elements
 % For fundamental structures
 % --- Typography hierarchy ---
-% Name:     24pt — headline presence, the visual anchor of the header
-% Position: 12pt — subtitle, clear step down from name
-% Contact:   9pt — small but legible, muted gray
-% Summary:   9.5/13 — comfortable body read, generous leading
-% Section:  12pt bold + letter spacing — strong hierarchy, full accent colour
-% Entries:  10/13 bold title, 9.5/12 position, 9/12 date
-% Bullets:  9.5/13 body — same rhythm as the summary
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{24pt}{28pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{24pt}{28pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{12pt}{15pt}\bodyfont\color{cvNameDark} #1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfont\color{cvBodyDark} #1}}
+% Name:     22pt — headline presence, the visual anchor of the header
+% Position: 11pt — subtitle, clear step down from name
+% Contact:  8.5pt — small but legible, muted gray
+% Summary:  8.8/11.5 — dense body read while still comfortable
+% Section:  11pt bold + letter spacing — strong hierarchy, full accent colour
+% Entries:  10/12.5 bold title, 9/11.5 position, 8.5/11.5 date
+% Bullets:  8.8/11.5 body — rhythmic with the summary
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{11pt}{14pt}\bodyfont\color{cvNameDark} #1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{8.8pt}{11.5pt}\bodyfont\color{cvBodyDark} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
 \newcommand*{\sectionstyle}[1]{{%
-  \fontsize{12pt}{15pt}\bodyfont\bfseries\color{cvAccent}%
+  \fontsize{11pt}{14pt}\bodyfont\bfseries\color{cvAccent}%
   \textls*[50]{\MakeUppercase{#1}}}%
 }
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10.5pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{9.5pt}{13pt}\bodyfont\upshape\color{cvBodyDark} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{12.5pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{9pt}{11.5pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8.5pt}{11.5pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.5pt}{11.5pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{8.8pt}{11.5pt}\bodyfont\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvBodyDark} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -449,12 +449,12 @@
 % the extra \topsep and \partopsep that the center environment injects.
 \newcommand*{\makecvheader}[1][C]{%
   {\centering
-    {\fontsize{24pt}{28pt}\headerfont\color{cvNameDark}%
+    {\fontsize{22pt}{26pt}\headerfont\color{cvNameDark}%
       \MakeUppercase{\@firstname\ \@lastname}}\par
-    \vspace{1.6mm}%
+    \vspace{1.2mm}%
     \ifthenelse{\isundefined{\@position}}{}{%
       \headerpositionstyle{\@position}\par
-      \vspace{1.6mm}%
+      \vspace{1.2mm}%
     }%
     \headersocialstyle{\makecvcontactline}\par%
   }%
@@ -476,9 +476,8 @@
 \newcommand{\cvsection}[1]{%
   \vspace{\acvSectionTopSkip}%
   \sectionstyle{#1}\par%
-  \vspace{1.2mm}%
+  \vspace{0.8mm}%
   {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
-  \vspace{0.5mm}%
   \phantomsection%
 }
 
@@ -487,9 +486,8 @@
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
     \cvsection{Professional Summary}%
-    \par\vspace{0.8mm}%
+    \par\vspace{0.4mm}%
     {\headerquotestyle{\justifying\@quote}\par}%
-    \vspace{1mm}%
   }%
 }
 
@@ -519,7 +517,7 @@
 %       \ifstrempty (from etoolbox) is used instead of \ifempty because it is
 %       long-safe, allowing \par tokens in its branches.
 \newcommand{\cventry}[4]{%
-  \par\vspace{2.5mm}\noindent
+  \par\vspace{1.8mm}\noindent
   {\entrytitlestyle{#1}}\par\noindent
   \ifstrempty{#2}{%
     \ifstrempty{#3}{}{{\entrydatestyle{#3}}\par}%
@@ -528,7 +526,7 @@
     \ifstrempty{#3}{}{\ {\entrydatestyle{\textbar\ #3}}}%
     \par
   }%
-  \ifstrempty{#4}{}{\vspace{0.8mm}#4\par}%
+  \ifstrempty{#4}{}{\vspace{0.5mm}#4\par}%
 }
 
 
@@ -551,16 +549,15 @@
 
 % =========================================================================
 % Define an environment for cvitems(for cventry)
-% Breathable bullet spacing — each item gets ~0.8mm vertical padding so the
-% list reads comfortably instead of feeling like a wall of text.
+% Moderate bullet spacing — enough for readability without wasting vertical space.
 \newenvironment{cvitems}{%
-  \vspace{-0.6mm}%
+  \vspace{-0.8mm}%
   \begin{justify}%
-  \begin{itemize}[leftmargin=2.2ex, topsep=0.8mm, partopsep=0pt, itemsep=0.8mm, parsep=0pt]%
+  \begin{itemize}[leftmargin=2.2ex, topsep=0.5mm, partopsep=0pt, itemsep=0.45mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
     \renewcommand{\labelitemi}{\textbullet}%
 }{%
   \end{itemize}%
   \end{justify}%
-  \vspace{-0.3mm}%
+  \vspace{-0.5mm}%
 }
