@@ -1,12 +1,21 @@
-\documentclass[11pt, a4paper]{resume}
+\documentclass[10pt, a4paper]{resume}
 
-\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=0.8cm, footskip=.5cm}
+\geometry{left=1.2cm, top=.8cm, right=1.2cm, bottom=0.8cm, footskip=.5cm}
 
 \colorlet{russell}{russell-skyblue}
 
 \setbool{acvSectionColorHighlight}{true}
 
 \renewcommand{\acvHeaderSocialSep}{\quad\textbullet\quad}
+
+% Tighten header spacing so the body fits on page 1
+\renewcommand{\acvHeaderAfterNameSkip}{.2mm}
+\renewcommand{\acvHeaderAfterPositionSkip}{.2mm}
+\renewcommand{\acvHeaderAfterAddressSkip}{-.5mm}
+\renewcommand{\acvHeaderAfterSocialSkip}{3mm}
+\renewcommand{\acvHeaderAfterQuoteSkip}{2mm}
+\renewcommand{\acvSectionTopSkip}{2mm}
+\renewcommand{\acvSectionContentTopSkip}{1.5mm}
 
 \name{Hisham}{Bin Seddeq}
 \position{Lead Software Engineer}
