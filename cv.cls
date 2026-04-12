@@ -4,11 +4,10 @@
 % This file is a modified version of russell.cls from:
 %   https://github.com/themagicalmammal/Resume
 % Original license: LPPL 1.3c
-% Further modified from Hassan AlWizrah's adaptation:
-%   https://github.com/hassanalwizrah/resume
-% Modifications by Hisham BinSeddeq for a two-column layout with stacked entries
+% Modifications by Hisham BinSeddeq — two-column layout, stacked entries,
+% full-color section headers, plain-text contact line, semantic color palette.
 %-------------------------------------------------------------------------------
-\ProvidesClass{resume}[2026/04/12 v1.1 Resume Class (derived from russell v1.6.1)]
+\ProvidesClass{cv}[2026/04/12 v2.0 CV Class (derived from russell v1.6.1)]
 \NeedsTeXFormat{LaTeX2e}
 
 
@@ -77,6 +76,8 @@
 }
 % Solves issues Warning: File `cv.out' has changed
 \RequirePackage{bookmark}
+% Needed for \textls* letter spacing on uppercase headers
+\RequirePackage{microtype}
 
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
@@ -124,7 +125,7 @@
 \colorlet{graytext}{gray}
 \colorlet{lighttext}{lightgray}
 \colorlet{sectiondivider}{gray}
-% russell colors
+% russell colors (kept for backward compat but unused in this fork)
 \definecolor{russell-emerald}{HTML}{00A388}
 \definecolor{russell-skyblue}{HTML}{0395DE}
 \definecolor{russell-red}{HTML}{DC3522}
@@ -135,7 +136,14 @@
 \definecolor{russell-concrete}{HTML}{95A5A6}
 \definecolor{russell-darknight}{HTML}{131A28}
 \definecolor{russell-black}{HTML}{000000}
-\colorlet{russell}{russell-red}
+
+% ----- Hisham's semantic palette (target design) -----
+\definecolor{cvNameDark}{HTML}{1F2937}     % near-black slate: name, position, entry title
+\definecolor{cvBodyDark}{HTML}{111827}     % body text
+\definecolor{cvAccent}{HTML}{2563EB}       % modern medium blue: section headers + company names
+\definecolor{cvMuted}{HTML}{6B7280}        % contact line, dates, locations, secondary labels
+\definecolor{cvRule}{HTML}{D1D5DB}         % thin divider under section headers
+\colorlet{russell}{cvAccent}               % any legacy \color{russell} now resolves to the new accent
 
 % Boolean value to switch section color highlighting
 \newbool{acvSectionColorHighlight}
@@ -161,27 +169,30 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{17pt}{1em}\headerfont\color{text} #1}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{17pt}{1em}\headerfont\color{text} #1}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{russell} #1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{7.4pt}{1em}\headerfont\color{text} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{8.8pt}{1em}\bodyfont\itshape\color{darktext} #1}}
-\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{11.5pt}{14pt}\bodyfont\color{cvNameDark} #1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
+\newcommand*{\sectionstyle}[1]{{%
+  \fontsize{12pt}{14pt}\bodyfont\bfseries\color{cvAccent}%
+  \textls*[40]{\MakeUppercase{#1}}}%
+}
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{russell} #1}}
-\newcommand*{\descriptionstyle}[1]{\justifying {\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10.5pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{12pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{9.5pt}{13pt}\bodyfontlight\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{13pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9.5pt}{13pt}\bodyfontlight\color{cvBodyDark} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -391,173 +402,45 @@
 %-------------------------------------------------------------------------------
 %                Commands for elements of CV structure
 %-------------------------------------------------------------------------------
-% Define a header for CV
+% Contact line separator — middle dot flanked by thin spaces
+\newcommand*{\cvContactSep}{~\textperiodcentered~}
+
+% Assembles a single-line, plain-text contact string from defined fields.
+% No FontAwesome icons — matches the target design.
+\newcommand*{\makecvcontactline}{%
+  \begingroup
+  \newbool{cvfirst}\setbool{cvfirst}{true}%
+  \ifthenelse{\isundefined{\@address}}{}{%
+    \ifbool{cvfirst}{\setbool{cvfirst}{false}}{\cvContactSep}%
+    \@address}%
+  \ifthenelse{\isundefined{\@mobile}}{}{%
+    \ifbool{cvfirst}{\setbool{cvfirst}{false}}{\cvContactSep}%
+    \@mobile}%
+  \ifthenelse{\isundefined{\@email}}{}{%
+    \ifbool{cvfirst}{\setbool{cvfirst}{false}}{\cvContactSep}%
+    \href{mailto:\@email}{\@email}}%
+  \ifthenelse{\isundefined{\@linkedin}}{}{%
+    \ifbool{cvfirst}{\setbool{cvfirst}{false}}{\cvContactSep}%
+    \href{https://www.\@linkedin}{\@linkedin}}%
+  \ifthenelse{\isundefined{\@github}}{}{%
+    \ifbool{cvfirst}{\setbool{cvfirst}{false}}{\cvContactSep}%
+    \href{https://\@github}{\@github}}%
+  \endgroup
+}
+
+% Define a header for CV — uppercase name, title-case position, plain contact line.
 % Usage: \makecvheader
 \newcommand*{\makecvheader}[1][C]{%
-  \newcommand*{\drawphoto}{%
-    \ifthenelse{\isundefined{\@photo}}{}{%
-      \newlength{\photodim}
-      \ifthenelse{\equal{\@photoshape}{circle}}%
-        {\setlength{\photodim}{1.3cm}}%
-        {\setlength{\photodim}{1.8cm}}%
-      \ifthenelse{\equal{\@photoedge}{edge}}%
-        {\def\@photoborder{darkgray}}%
-        {\def\@photoborder{none}}%
-      \begin{tikzpicture}%
-        \node[\@photoshape, draw=\@photoborder, line width=0.3mm, inner sep=\photodim, fill overzoom image=\@photo] () {};
-      \end{tikzpicture}
-    }%
-  }
-  \newlength{\headertextwidth}
-  \newlength{\headerphotowidth}
-  \ifthenelse{\isundefined{\@photo}}{
-    \setlength{\headertextwidth}{\textwidth}
-    \setlength{\headerphotowidth}{0cm}
-  }{%
-    \setlength{\headertextwidth}{0.76\textwidth}
-    \setlength{\headerphotowidth}{0.24\textwidth}
-  }%
-  \begin{minipage}[c]{\headerphotowidth}%
-    \ifthenelse{\equal{\@photoalign}{left}}{\raggedright\drawphoto}{}
-  \end{minipage}
-  \begin{minipage}[c]{\headertextwidth}
-    \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
-    \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
-    \\[\acvHeaderAfterNameSkip]%
-    \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
-    \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
-    \headersocialstyle{%
-      \newbool{isstart}%
-      \setbool{isstart}{true}%
-      \ifthenelse{\isundefined{\@mobile}}%
-        {}%
-        {%
-          \href{tel:\@mobile}{\faMobile\acvHeaderIconSep\@mobile}%
-          \setbool{isstart}{false}%
-        }%
-      \ifthenelse{\isundefined{\@email}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
-        }%
-      \ifthenelse{\isundefined{\@dateofbirth}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          % \mbox prevents wrapping of elements%
-          \mbox{\faBirthdayCake\acvHeaderIconSep\@dateofbirth}%
-        }%
-      \ifthenelse{\isundefined{\@homepage}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
-        }%
-      \ifthenelse{\isundefined{\@github}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://\@github}{\faGithubSquare\acvHeaderIconSep\@github}%
-        }%
-      \ifthenelse{\isundefined{\@gitlab}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://gitlab.com/\@gitlab}{\faGitlab\acvHeaderIconSep\@gitlab}%
-        }%
-      \ifthenelse{\isundefined{\@bitbucket}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://bitbucket.com/\@bitbucket}{\faBitbucket\acvHeaderIconSep\@bitbucket}%
-        }%
-      \ifthenelse{\isundefined{\@stackoverflowid}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
-        }%
-      \ifthenelse{\isundefined{\@linkedin}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.\@linkedin}{\faLinkedin\acvHeaderIconSep\@linkedin}%
-        }%
-      \ifthenelse{\isundefined{\@orcid}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://orcid.org/\@orcid}{\faOrcid\acvHeaderIconSep\@orcid}%
-        }%
-      \ifthenelse{\isundefined{\@twitter}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://twitter.com/\@twitter}{\faTwitter\acvHeaderIconSep\@twitter}%
-        }%
-      \ifthenelse{\isundefined{\@mastodonname}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://\@mastodoninstance/@\@mastodonname}{\faMastodon\acvHeaderIconSep\@mastodonname}%
-        }%
-      \ifthenelse{\isundefined{\@skype}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \faSkype\acvHeaderIconSep\@skype%
-        }%
-      \ifthenelse{\isundefined{\@reddit}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.reddit.com/user/\@reddit}{\faReddit\acvHeaderIconSep\@reddit}%
-        }%
-      \ifthenelse{\isundefined{\@researchgate}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.researchgate.net/profile/\@researchgate}{\faResearchgate\acvHeaderIconSep\@researchgate}%
-        }%
-      \ifthenelse{\isundefined{\@xing}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
-        }%
-      \ifthenelse{\isundefined{\@medium}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://medium.com/@\@medium}{\faMedium\acvHeaderIconSep\@medium}%
-        }%
-      \ifthenelse{\isundefined{\@kaggle}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://kaggle.com/\@kaggle}{\faKaggle\acvHeaderIconSep\@kaggle}%
-        }%
-      \ifthenelse{\isundefined{\@googlescholarid}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
-        }%
-      \ifthenelse{\isundefined{\@extrainfo}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \@extrainfo%
-        }%
-    } \\[\acvHeaderAfterSocialSkip]%
-    \ifthenelse{\isundefined{\@quote}}%
-      {}%
-      {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
-  \end{minipage}%
-  \begin{minipage}[c]{\headerphotowidth}%
-    \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
-  \end{minipage}
+  \begin{center}
+    \headerfirstnamestyle{\@firstname}\ \headerlastnamestyle{\@lastname}\par
+    \vspace{1.4mm}
+    \ifthenelse{\isundefined{\@position}}{}{%
+      \headerpositionstyle{\@position}\par
+      \vspace{1.8mm}%
+    }
+    \headersocialstyle{\makecvcontactline}\par
+  \end{center}
+  \vspace{1mm}
 }
 
 % Define a footer for CV
@@ -569,13 +452,35 @@
   \fancyfoot[R]{\footerstyle{#3}}
 }
 
-% Define a section for CV
+% Define a section for CV — heading in accent color with a thin gray rule underneath.
+% Uses \linewidth (not \textwidth) so the rule adapts to minipage column widths.
 % Usage: \cvsection{<section-title>}
 \newcommand{\cvsection}[1]{%
-  \vspace{\acvSectionTopSkip}
-  \sectionstyle{#1}
-  \phantomsection
-  \color{sectiondivider}\vhrulefill{0.9pt}
+  \vspace{\acvSectionTopSkip}%
+  \sectionstyle{#1}\par%
+  \vspace{0.8mm}%
+  {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
+  \vspace{0.4mm}%
+  \phantomsection%
+}
+
+% Renders the professional summary as a full-width section block.
+% Call between \makecvheader and the two-column body so it spans full page width.
+\newcommand*{\makesummarysection}{%
+  \ifthenelse{\isundefined{\@quote}}{}{%
+    \cvsection{Professional Summary}%
+    \par\vspace{1mm}%
+    {\headerquotestyle{\justifying\@quote}\par}%
+    \vspace{1mm}%
+  }%
+}
+
+% Helper: renders a company/institution name in accent color, plus optional
+% muted-gray location. Designed to be used inside \cventry's #2 argument.
+% Usage: {\cvcompany{SCAI / Humain}{Riyadh}}
+\newcommand*{\cvcompany}[2]{%
+  {\color{cvAccent}\bfseries #1}%
+  \ifstrempty{#2}{}{\ {\color{cvMuted}\textbar\ #2}}%
 }
 
 % =========================================================================
@@ -626,15 +531,15 @@
 
 % =========================================================================
 % Define an environment for cvitems(for cventry)
+% Relaxed spacing for readability — each bullet gets a small breathing room.
 \newenvironment{cvitems}{%
-  \vspace{-1.5mm}
-  \begin{justify}
-  \begin{itemize}[leftmargin=2ex, nosep, noitemsep, topsep=0.5mm, partopsep=0pt]
-    \setlength{\parskip}{0pt}
-    \setlength{\itemsep}{0.3mm}
-    \renewcommand{\labelitemi}{\bullet}
+  \vspace{-0.8mm}%
+  \begin{justify}%
+  \begin{itemize}[leftmargin=2.2ex, topsep=0.6mm, partopsep=0pt, itemsep=0.6mm, parsep=0pt]%
+    \setlength{\parskip}{0pt}%
+    \renewcommand{\labelitemi}{\textbullet}%
 }{%
-  \end{itemize}
-  \end{justify}
-  \vspace{-1mm}
+  \end{itemize}%
+  \end{justify}%
+  \vspace{-0.5mm}%
 }

@@ -1,4 +1,4 @@
-name: Build and Release Resume
+name: Build and Release CV
 
 on:
   push:
@@ -18,19 +18,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile resume
+      - name: Compile CV
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume.tex
+          root_file: cv.tex
           latexmk_use_xelatex: true
+
+      - name: Rename artifact
+        run: |
+          mv cv.pdf Hisham_BinSeddeq_CV.pdf
+          ls -la Hisham_BinSeddeq_CV.pdf
 
       - name: Generate preview image
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq poppler-utils
-          pdftoppm -png -r 200 -f 1 -l 1 resume.pdf preview
-          mv preview-1.png resume_preview.png
-          ls -la resume.pdf resume_preview.png
+          pdftoppm -png -r 200 -f 1 -l 1 Hisham_BinSeddeq_CV.pdf preview
+          mv preview-1.png Hisham_BinSeddeq_CV_preview.png
+          ls -la Hisham_BinSeddeq_CV.pdf Hisham_BinSeddeq_CV_preview.png
 
       - name: Create release
         env:
@@ -44,6 +49,6 @@ jobs:
             SUFFIX=$((SUFFIX + 1))
           done
           COMMIT_SHA=$(git rev-parse --short HEAD)
-          gh release create "$TAG" resume.pdf resume_preview.png \
-            --title "Resume $TAG" \
+          gh release create "$TAG" Hisham_BinSeddeq_CV.pdf Hisham_BinSeddeq_CV_preview.png \
+            --title "CV $TAG" \
             --notes "Compiled from $COMMIT_SHA"
