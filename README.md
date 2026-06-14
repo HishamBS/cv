@@ -64,7 +64,7 @@ No local LaTeX toolchain required. Write the content, commit, forget.
 
 <br>
 
-Requires XeLaTeX with the `roboto`, `sourcesanspro`, and `microtype` packages.
+Requires XeLaTeX with the `roboto`, `sourcesans`, and `microtype` packages.
 
 ```bash
 latexmk -xelatex cv.tex

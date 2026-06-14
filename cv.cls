@@ -34,8 +34,6 @@
 %-------------------------------------------------------------------------------
 % Needed to make fixed length table
 \RequirePackage{array}
-% Needed for fixed-label skill rows in the sidebar
-\RequirePackage{tabularx}
 % Needed to handle list environment
 \RequirePackage{enumitem}
 % Needed to handle text alignment
@@ -62,9 +60,9 @@
 \RequirePackage{unicode-math}
 % Needed to use icons from font-awesome (legacy, no longer used for contact line)
 \RequirePackage{fontawesome5}
-% Source Sans Pro keeps the resume crisp at small sizes without the generic
+% Source Sans keeps the resume crisp at small sizes without the generic
 % word-processor feel Open Sans created in the dense one-page layout.
-\RequirePackage[default]{sourcesanspro}
+\RequirePackage[default]{sourcesans}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
 % Needed to deal a paragraphs
@@ -175,7 +173,7 @@
 %-------------------------------------------------------------------------------
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
-% Source Sans Pro is the document default (via [default] option above).
+% Source Sans is the document default (via [default] option above).
 \newcommand*{\headerfont}{\sffamily}
 \newcommand*{\headerfontlight}{\sffamily}
 \newcommand*{\footerfont}{\sffamily}
@@ -582,9 +580,9 @@
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
   \begingroup\cvRagged
-  \begin{tabularx}{\linewidth}{@{}>{\RaggedRight\arraybackslash}p{16mm}@{\hspace{1.2mm}}>{\cvRagged\arraybackslash}X@{}}
+  \begin{tabular}{@{}>{\RaggedRight\arraybackslash}p{16mm}@{\hspace{1.2mm}}>{\cvRagged\arraybackslash}p{\dimexpr\linewidth-17.2mm\relax}@{}}
 }{%
-  \end{tabularx}
+  \end{tabular}
   \par\endgroup
 }
 % Define a line of cv information(skill) — inline "Category: list" format
