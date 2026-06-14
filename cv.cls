@@ -599,7 +599,7 @@
 \newenvironment{cvitems}{%
   \vspace{0.1mm}%
   \begingroup\cvRagged%
-  \begin{itemize}[leftmargin=1.35em, labelsep=0.55em, topsep=0.45mm, partopsep=0pt, itemsep=1.05mm, parsep=0pt]%
+  \begin{itemize}[leftmargin=1.35em, labelsep=0.55em, topsep=0.45mm, partopsep=0pt, itemsep=1.75mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
     \renewcommand{\labelitemi}{\raisebox{0.15ex}{\scriptsize\textbullet}}%
 }{%
