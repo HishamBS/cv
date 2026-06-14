@@ -189,36 +189,36 @@
 % Name:     24pt — strong, left-aligned anchor without wasting vertical space
 % Position: 10pt — executive subtitle in muted color
 % Contact:  8.1pt — compact two-line block
-% Summary:  8.9/11.4 — readable, no decorative summary heading
-% Section:   9.6pt bold + letter spacing — restrained hierarchy
-% Entries:   9.6/11.2 title, 8.4/10.2 metadata/date
-% Bullets:   8.55/10.7 body — dense but professional
+% Summary:  9.2/12.0 — readable profile text
+% Section:   9.5pt bold + letter spacing — restrained hierarchy
+% Entries:  10.0/12.0 title, 8.8/10.8 metadata/date
+% Bullets:   9.05/11.45 body — compact but readable
 \newcommand*{\headerfirstnamestyle}[1]{{\fontsize{24pt}{27pt}\headerfont\bfseries\color{cvNameDark} \MakeUppercase{#1}}}
 \newcommand*{\headerlastnamestyle}[1]{{\fontsize{24pt}{27pt}\headerfont\bfseries\color{cvNameDark} \MakeUppercase{#1}}}
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\bfseries\color{cvAccent} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8.1pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{8.1pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{8.9pt}{11.4pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{9.2pt}{12pt}\bodyfont\color{cvBodyDark} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
 \newcommand*{\sectionstyle}[1]{{%
-  \fontsize{9.6pt}{11.4pt}\bodyfont\bfseries\color{cvAccent}%
-  \textls*[58]{\MakeUppercase{#1}}}%
+  \fontsize{9.5pt}{11.5pt}\bodyfont\bfseries\color{cvAccent}%
+  \textls*[50]{\MakeUppercase{#1}}}%
 }
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{9.6pt}{11.2pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.45pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8.15pt}{10.2pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.15pt}{10.2pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{{\cvRagged\fontsize{8.55pt}{10.7pt}\bodyfont\upshape\color{cvBodyDark} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.8pt}{10.8pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8.6pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.6pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{{\cvRagged\fontsize{9.05pt}{11.45pt}\bodyfont\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{8.55pt}{10.3pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{8.35pt}{10.3pt}\bodyfont\color{cvBodyDark} #1}}
-\newcommand*{\compacttitlestyle}[1]{{\fontsize{8.55pt}{10.1pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\compactmetastyle}[1]{{\fontsize{8pt}{9.7pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{8.8pt}{10.8pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{8.75pt}{10.8pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\compacttitlestyle}[1]{{\fontsize{8.85pt}{10.6pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\compactmetastyle}[1]{{\fontsize{8.45pt}{10.3pt}\bodyfontlight\color{cvMuted} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -509,9 +509,9 @@
 \newcommand{\cvsection}[1]{%
   \vspace{\acvSectionTopSkip}%
   \sectionstyle{#1}\par%
-  \vspace{0.45mm}%
+  \vspace{0.65mm}%
   {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
-  \vspace{0.75mm}%
+  \vspace{1.05mm}%
   \phantomsection%
 }
 
@@ -519,9 +519,9 @@
 % Call between \makecvheader and the two-column body so it spans full page width.
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
-    \vspace{2mm}%
+    \vspace{2.4mm}%
     {\headerquotestyle{\cvRagged\@quote}\par}%
-    \vspace{1mm}%
+    \vspace{1.5mm}%
   }%
 }
 
@@ -538,7 +538,7 @@
 % gracefully when narrow). Saves ~1 line per item vs a full \cventry.
 % Usage: \cvcompact{Certified Scrum Master}{Scrum Alliance}
 \newcommand*{\cvcompact}[2]{%
-  \par\vspace{0.85mm}\noindent\begingroup\cvRagged
+  \par\vspace{1.25mm}\noindent\begingroup\cvRagged
   {\compacttitlestyle{#1}}%
   \ifstrempty{#2}{}{\ {\compactmetastyle{\textendash\ #2}}}%
   \par\endgroup
@@ -562,7 +562,7 @@
 %       \ifstrempty (from etoolbox) is used instead of \ifempty because it is
 %       long-safe, allowing \par tokens in its branches.
 \newcommand{\cventry}[4]{%
-  \par\vspace{1.85mm}\noindent
+  \par\vspace{3.1mm}\noindent
   \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
     {\entrytitlestyle{#1}} & {\entrydatestyle{#3}} \\
   \end{tabular*}\par\vspace{-0.3mm}\noindent
@@ -571,7 +571,7 @@
   }{%
     {\entrypositionstyle{#2}}\par
   }%
-  \ifstrempty{#4}{}{\vspace{0.25mm}#4\par}%
+  \ifstrempty{#4}{}{\vspace{0.65mm}#4\par}%
 }
 
 
@@ -580,7 +580,7 @@
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
   \begingroup\cvRagged
-  \begin{tabular}{@{}>{\RaggedRight\arraybackslash}p{16mm}@{\hspace{1.2mm}}>{\cvRagged\arraybackslash}p{\dimexpr\linewidth-17.2mm\relax}@{}}
+  \begin{tabular}{@{}>{\RaggedRight\arraybackslash}p{15.5mm}@{\hspace{1.3mm}}>{\cvRagged\arraybackslash}p{\dimexpr\linewidth-16.8mm\relax}@{}}
 }{%
   \end{tabular}
   \par\endgroup
@@ -590,20 +590,20 @@
 % between two font-changing groups occasionally get eaten.
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
-  {\skilltypestyle{#1}} & {\skillsetstyle{#2}}\\[0.65mm]
+  {\skilltypestyle{#1}} & {\skillsetstyle{#2}}\\[1.15mm]
 }
 
 % =========================================================================
 % Define an environment for cvitems(for cventry)
 % Moderate bullet spacing — enough for readability without wasting vertical space.
 \newenvironment{cvitems}{%
-  \vspace{-0.55mm}%
+  \vspace{0.1mm}%
   \begingroup\cvRagged%
-  \begin{itemize}[leftmargin=1.45em, labelsep=0.55em, topsep=0.35mm, partopsep=0pt, itemsep=0.35mm, parsep=0pt]%
+  \begin{itemize}[leftmargin=1.35em, labelsep=0.55em, topsep=0.45mm, partopsep=0pt, itemsep=1.05mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
-    \renewcommand{\labelitemi}{\raisebox{0.2ex}{\tiny\textbullet}}%
+    \renewcommand{\labelitemi}{\raisebox{0.15ex}{\scriptsize\textbullet}}%
 }{%
   \end{itemize}%
   \par\endgroup%
-  \vspace{-0.35mm}%
+  \vspace{0.25mm}%
 }

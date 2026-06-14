@@ -54,9 +54,9 @@ No local LaTeX toolchain required. Write the content, commit, forget.
 | `cv/experience.tex` | Professional experience *(left column)* |
 | `cv/skills.tex` | Technical skills *(right column)* |
 | `cv/education.tex` | Education |
-| `cv/certifications.tex` | Certifications |
-| `cv/courses.tex` | Courses & training |
-| `cv/earlier.tex` | Earlier experience |
+| `cv/certifications.tex` | Credentials section wrapper |
+| `cv/courses.tex` | Courses & training entries |
+| `cv/earlier.tex` | Earlier experience *(left column)* |
 | `.github/workflows/release.yml` | CI — compile with XeLaTeX, attach PDF + preview to a release |
 
 <details>
