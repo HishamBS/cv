@@ -56,7 +56,7 @@ No local LaTeX toolchain required. Write the content, commit, forget.
 | `cv/education.tex` | Education |
 | `cv/certifications.tex` | Credentials section wrapper |
 | `cv/courses.tex` | Courses & training entries |
-| `cv/earlier.tex` | Earlier experience *(left column)* |
+| `cv/earlier.tex` | Earlier experience *(right column)* |
 | `.github/workflows/release.yml` | CI — compile with XeLaTeX, attach PDF + preview to a release |
 
 <details>
