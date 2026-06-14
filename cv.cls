@@ -84,8 +84,16 @@
 % Keep narrow-column text readable. CV content contains many technical terms
 % where TeX hyphenation creates ugly breaks in a one-page layout.
 \setlength{\emergencystretch}{1.6em}
-\hyphenpenalty=9000
-\exhyphenpenalty=9000
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\pretolerance=10000
+
+\newcommand*{\cvRagged}{%
+  \RaggedRight
+  \hyphenpenalty=10000
+  \exhyphenpenalty=10000
+  \pretolerance=10000
+}
 
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
@@ -207,11 +215,13 @@
 \newcommand*{\entrypositionstyle}[1]{{\fontsize{8.7pt}{10.8pt}\bodyfont\color{cvMuted} #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{{\RaggedRight\fontsize{8.7pt}{11.3pt}\bodyfont\upshape\color{cvBodyDark} #1}}
+\newcommand*{\descriptionstyle}[1]{{\cvRagged\fontsize{8.7pt}{11.3pt}\bodyfont\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
 \newcommand*{\skilltypestyle}[1]{{\fontsize{9.1pt}{11.3pt}\bodyfont\bfseries\color{cvNameDark} #1}}
 \newcommand*{\skillsetstyle}[1]{{\fontsize{8.7pt}{11.3pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\compacttitlestyle}[1]{{\fontsize{9.1pt}{10.8pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\compactmetastyle}[1]{{\fontsize{8.3pt}{10.4pt}\bodyfontlight\color{cvMuted} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -493,7 +503,7 @@
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
     \cvsection{Professional Summary}%
-    {\headerquotestyle{\RaggedRight\@quote}\par}%
+    {\headerquotestyle{\cvRagged\@quote}\par}%
   }%
 }
 
@@ -510,9 +520,9 @@
 % gracefully when narrow). Saves ~1 line per item vs a full \cventry.
 % Usage: \cvcompact{Certified Scrum Master}{Scrum Alliance}
 \newcommand*{\cvcompact}[2]{%
-  \par\vspace{1.3mm}\noindent
-  {\entrytitlestyle{#1}}%
-  \ifstrempty{#2}{}{\ {\entrydatestyle{\textendash\ #2}}}%
+  \par\vspace{1.05mm}\noindent
+  {\compacttitlestyle{#1}}%
+  \ifstrempty{#2}{}{\ {\compactmetastyle{\textendash\ #2}}}%
   \par
 }
 
@@ -551,7 +561,7 @@
 % Define an environment for cvskill (inline paragraph style — narrow-column friendly)
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
-  \begingroup\RaggedRight
+  \begingroup\cvRagged
   \setlength{\parskip}{0.8mm}
 }{%
   \par\endgroup
@@ -569,7 +579,7 @@
 % Moderate bullet spacing — enough for readability without wasting vertical space.
 \newenvironment{cvitems}{%
   \vspace{-0.45mm}%
-  \begingroup\RaggedRight%
+  \begingroup\cvRagged%
   \begin{itemize}[leftmargin=1.7ex, topsep=0.45mm, partopsep=0pt, itemsep=0.5mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
     \renewcommand{\labelitemi}{\textbullet}%
