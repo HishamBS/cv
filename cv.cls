@@ -34,6 +34,8 @@
 %-------------------------------------------------------------------------------
 % Needed to make fixed length table
 \RequirePackage{array}
+% Needed for fixed-label skill rows in the sidebar
+\RequirePackage{tabularx}
 % Needed to handle list environment
 \RequirePackage{enumitem}
 % Needed to handle text alignment
@@ -60,10 +62,9 @@
 \RequirePackage{unicode-math}
 % Needed to use icons from font-awesome (legacy, no longer used for contact line)
 \RequirePackage{fontawesome5}
-% Open Sans — used for the entire document. It is a humanist sans-serif with
-% excellent readability at body sizes, a tight x-height, and is widely
-% recognised as the "Word/Docs export" aesthetic Hisham's original PDF has.
-\RequirePackage[default]{opensans}
+% Source Sans Pro keeps the resume crisp at small sizes without the generic
+% word-processor feel Open Sans created in the dense one-page layout.
+\RequirePackage[default]{sourcesanspro}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
 % Needed to deal a paragraphs
@@ -154,11 +155,11 @@
 \definecolor{russell-black}{HTML}{000000}
 
 % ----- Hisham's semantic palette (target design) -----
-\definecolor{cvNameDark}{HTML}{1F2937}     % near-black slate: name, position, entry title
-\definecolor{cvBodyDark}{HTML}{111827}     % body text
-\definecolor{cvAccent}{HTML}{2563EB}       % modern medium blue: section headers + company names
-\definecolor{cvMuted}{HTML}{6B7280}        % contact line, dates, locations, secondary labels
-\definecolor{cvRule}{HTML}{D1D5DB}         % thin divider under section headers
+\definecolor{cvNameDark}{HTML}{111827}     % near-black: name, position, entry title
+\definecolor{cvBodyDark}{HTML}{1F2937}     % body text
+\definecolor{cvAccent}{HTML}{1D4ED8}       % restrained blue: section headers + company names
+\definecolor{cvMuted}{HTML}{64748B}        % contact line, dates, locations, secondary labels
+\definecolor{cvRule}{HTML}{CBD5E1}         % thin divider under section headers
 \colorlet{russell}{cvAccent}               % any legacy \color{russell} now resolves to the new accent
 
 % Boolean value to switch section color highlighting
@@ -174,14 +175,12 @@
 %-------------------------------------------------------------------------------
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
-% Open Sans is the document default (via [default] option above). The opensans
-% package does not expose a \opensanslight command, so *light commands fall
-% back to regular — we don't rely on the light variant heavily.
-\newcommand*{\headerfont}{\opensans}
-\newcommand*{\headerfontlight}{\opensans}
-\newcommand*{\footerfont}{\opensans}
-\newcommand*{\bodyfont}{\opensans}
-\newcommand*{\bodyfontlight}{\opensans}
+% Source Sans Pro is the document default (via [default] option above).
+\newcommand*{\headerfont}{\sffamily}
+\newcommand*{\headerfontlight}{\sffamily}
+\newcommand*{\footerfont}{\sffamily}
+\newcommand*{\bodyfont}{\sffamily}
+\newcommand*{\bodyfontlight}{\sffamily}
 
 %-------------------------------------------------------------------------------
 %                Configuration for styles
@@ -189,39 +188,39 @@
 % Configure styles for each CV elements
 % For fundamental structures
 % --- Typography hierarchy ---
-% Name:     22pt — headline presence, the visual anchor of the header
-% Position: 11pt — subtitle, clear step down from name
-% Contact:  8.5pt — small but legible, muted gray
-% Summary:  8.7/11.3 — compact without looking squeezed
-% Section:  10.5pt bold + letter spacing — clear hierarchy without shouting
-% Entries:  9.8/11.6 bold title, 8.7/10.8 position, 8.3/10.8 date
-% Bullets:  8.7/11.3 body — readable in narrow columns
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{11pt}{14pt}\bodyfont\color{cvNameDark} #1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{8.7pt}{11.3pt}\bodyfont\color{cvBodyDark} #1}}
+% Name:     24pt — strong, left-aligned anchor without wasting vertical space
+% Position: 10pt — executive subtitle in muted color
+% Contact:  8.1pt — compact two-line block
+% Summary:  8.9/11.4 — readable, no decorative summary heading
+% Section:   9.6pt bold + letter spacing — restrained hierarchy
+% Entries:   9.6/11.2 title, 8.4/10.2 metadata/date
+% Bullets:   8.55/10.7 body — dense but professional
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{24pt}{27pt}\headerfont\bfseries\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{24pt}{27pt}\headerfont\bfseries\color{cvNameDark} \MakeUppercase{#1}}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\bfseries\color{cvAccent} #1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8.1pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{8.1pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{8.9pt}{11.4pt}\bodyfont\color{cvBodyDark} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
 \newcommand*{\sectionstyle}[1]{{%
-  \fontsize{10.5pt}{12.5pt}\bodyfont\bfseries\color{cvAccent}%
-  \textls*[42]{\MakeUppercase{#1}}}%
+  \fontsize{9.6pt}{11.4pt}\bodyfont\bfseries\color{cvAccent}%
+  \textls*[58]{\MakeUppercase{#1}}}%
 }
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{9.8pt}{11.6pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.7pt}{10.8pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{{\cvRagged\fontsize{8.7pt}{11.3pt}\bodyfont\upshape\color{cvBodyDark} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{9.6pt}{11.2pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.45pt}{10.2pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8.15pt}{10.2pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.15pt}{10.2pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{{\cvRagged\fontsize{8.55pt}{10.7pt}\bodyfont\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{9.1pt}{11.3pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{8.7pt}{11.3pt}\bodyfont\color{cvBodyDark} #1}}
-\newcommand*{\compacttitlestyle}[1]{{\fontsize{9.1pt}{10.8pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\compactmetastyle}[1]{{\fontsize{8.3pt}{10.4pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{8.55pt}{10.3pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{8.35pt}{10.3pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\compacttitlestyle}[1]{{\fontsize{8.55pt}{10.1pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\compactmetastyle}[1]{{\fontsize{8pt}{9.7pt}\bodyfontlight\color{cvMuted} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -405,8 +404,8 @@
 \newcommand{\acvHeaderAfterAddressSkip}{-.5mm}
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
-\newcommand{\acvHeaderAfterSocialSkip}{6mm}
-\newcommand{\acvHeaderAfterQuoteSkip}{5mm}
+\newcommand{\acvHeaderAfterSocialSkip}{4mm}
+\newcommand{\acvHeaderAfterQuoteSkip}{3mm}
 
 % Others
 \newcommand{\acvSectionTopSkip}{3mm}
@@ -457,6 +456,19 @@
   \endgroup
 }
 
+% Two-line contact block for the right side of the header. The long one-line
+% contact string made the top of the page feel centered and template-like.
+\newcommand*{\makecvcontactblock}{%
+  \begingroup
+  \ifthenelse{\isundefined{\@address}}{}{\@address}%
+  \ifthenelse{\isundefined{\@mobile}}{}{\cvContactSep\@mobile}%
+  \ifthenelse{\isundefined{\@email}}{}{\cvContactSep\href{mailto:\@email}{\@email}}%
+  \par
+  \ifthenelse{\isundefined{\@linkedin}}{}{\href{https://www.\@linkedin}{\@linkedin}}%
+  \ifthenelse{\isundefined{\@github}}{}{\cvContactSep\href{https://\@github}{\@github}}%
+  \endgroup
+}
+
 % Define a header for CV — uppercase name, title-case position, plain contact line.
 % Usage: \makecvheader
 % NOTE: first + last name are combined into a single \MakeUppercase call to avoid
@@ -464,16 +476,23 @@
 % Uses {\centering ...\par} instead of \begin{center}...\end{center} to avoid
 % the extra \topsep and \partopsep that the center environment injects.
 \newcommand*{\makecvheader}[1][C]{%
-  {\centering
-    {\fontsize{22pt}{26pt}\headerfont\color{cvNameDark}%
+  \noindent
+  \begin{minipage}[t]{0.50\textwidth}
+    \RaggedRight
+    {\fontsize{24pt}{27pt}\headerfont\bfseries\color{cvNameDark}%
       \MakeUppercase{\@firstname\ \@lastname}}\par
-    \vspace{1.2mm}%
+    \vspace{0.7mm}%
     \ifthenelse{\isundefined{\@position}}{}{%
       \headerpositionstyle{\@position}\par
-      \vspace{1.2mm}%
     }%
-    \headersocialstyle{\makecvcontactline}\par%
-  }%
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.47\textwidth}
+    \RaggedLeft
+    \headersocialstyle{\makecvcontactblock}\par
+  \end{minipage}%
+  \par\vspace{2.8mm}%
+  {\color{cvRule}\rule{\linewidth}{0.5pt}}\par%
 }
 
 % Define a footer for CV
@@ -492,9 +511,9 @@
 \newcommand{\cvsection}[1]{%
   \vspace{\acvSectionTopSkip}%
   \sectionstyle{#1}\par%
-  \vspace{0.6mm}%
+  \vspace{0.45mm}%
   {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
-  \vspace{0.6mm}%
+  \vspace{0.75mm}%
   \phantomsection%
 }
 
@@ -502,8 +521,9 @@
 % Call between \makecvheader and the two-column body so it spans full page width.
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
-    \cvsection{Professional Summary}%
+    \vspace{2mm}%
     {\headerquotestyle{\cvRagged\@quote}\par}%
+    \vspace{1mm}%
   }%
 }
 
@@ -520,10 +540,10 @@
 % gracefully when narrow). Saves ~1 line per item vs a full \cventry.
 % Usage: \cvcompact{Certified Scrum Master}{Scrum Alliance}
 \newcommand*{\cvcompact}[2]{%
-  \par\vspace{1.05mm}\noindent
+  \par\vspace{0.85mm}\noindent\begingroup\cvRagged
   {\compacttitlestyle{#1}}%
   \ifstrempty{#2}{}{\ {\compactmetastyle{\textendash\ #2}}}%
-  \par
+  \par\endgroup
 }
 
 % =========================================================================
@@ -544,16 +564,16 @@
 %       \ifstrempty (from etoolbox) is used instead of \ifempty because it is
 %       long-safe, allowing \par tokens in its branches.
 \newcommand{\cventry}[4]{%
-  \par\vspace{2.15mm}\noindent
-  {\entrytitlestyle{#1}}\par\noindent
+  \par\vspace{1.85mm}\noindent
+  \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    {\entrytitlestyle{#1}} & {\entrydatestyle{#3}} \\
+  \end{tabular*}\par\vspace{-0.3mm}\noindent
   \ifstrempty{#2}{%
-    \ifstrempty{#3}{}{{\entrydatestyle{#3}}\par}%
+    {}%
   }{%
-    {\entrypositionstyle{#2}}%
-    \ifstrempty{#3}{}{\ {\entrydatestyle{\textbar\ #3}}}%
-    \par
+    {\entrypositionstyle{#2}}\par
   }%
-  \ifstrempty{#4}{}{\vspace{0.35mm}#4\par}%
+  \ifstrempty{#4}{}{\vspace{0.25mm}#4\par}%
 }
 
 
@@ -562,8 +582,9 @@
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
   \begingroup\cvRagged
-  \setlength{\parskip}{0.8mm}
+  \begin{tabularx}{\linewidth}{@{}>{\RaggedRight\arraybackslash}p{16mm}@{\hspace{1.2mm}}>{\cvRagged\arraybackslash}X@{}}
 }{%
+  \end{tabularx}
   \par\endgroup
 }
 % Define a line of cv information(skill) — inline "Category: list" format
@@ -571,20 +592,20 @@
 % between two font-changing groups occasionally get eaten.
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
-  {\skilltypestyle{#1:}}\hspace{0.35em}{\skillsetstyle{#2}}\par
+  {\skilltypestyle{#1}} & {\skillsetstyle{#2}}\\[0.65mm]
 }
 
 % =========================================================================
 % Define an environment for cvitems(for cventry)
 % Moderate bullet spacing — enough for readability without wasting vertical space.
 \newenvironment{cvitems}{%
-  \vspace{-0.45mm}%
+  \vspace{-0.55mm}%
   \begingroup\cvRagged%
-  \begin{itemize}[leftmargin=1.7ex, topsep=0.45mm, partopsep=0pt, itemsep=0.5mm, parsep=0pt]%
+  \begin{itemize}[leftmargin=1.45em, labelsep=0.55em, topsep=0.35mm, partopsep=0pt, itemsep=0.35mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
-    \renewcommand{\labelitemi}{\textbullet}%
+    \renewcommand{\labelitemi}{\raisebox{0.2ex}{\tiny\textbullet}}%
 }{%
   \end{itemize}%
   \par\endgroup%
-  \vspace{-0.25mm}%
+  \vspace{-0.35mm}%
 }
