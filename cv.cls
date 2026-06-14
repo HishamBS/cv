@@ -81,6 +81,12 @@
 % Needed for \textls* letter spacing on uppercase headers
 \RequirePackage{microtype}
 
+% Keep narrow-column text readable. CV content contains many technical terms
+% where TeX hyphenation creates ugly breaks in a one-page layout.
+\setlength{\emergencystretch}{1.6em}
+\hyphenpenalty=9000
+\exhyphenpenalty=9000
+
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
@@ -178,34 +184,34 @@
 % Name:     22pt — headline presence, the visual anchor of the header
 % Position: 11pt — subtitle, clear step down from name
 % Contact:  8.5pt — small but legible, muted gray
-% Summary:  8.8/11.5 — dense body read while still comfortable
-% Section:  11pt bold + letter spacing — strong hierarchy, full accent colour
-% Entries:  10/12.5 bold title, 9/11.5 position, 8.5/11.5 date
-% Bullets:  8.8/11.5 body — rhythmic with the summary
+% Summary:  8.7/11.3 — compact without looking squeezed
+% Section:  10.5pt bold + letter spacing — clear hierarchy without shouting
+% Entries:  9.8/11.6 bold title, 8.7/10.8 position, 8.3/10.8 date
+% Bullets:  8.7/11.3 body — readable in narrow columns
 \newcommand*{\headerfirstnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
 \newcommand*{\headerlastnamestyle}[1]{{\fontsize{22pt}{26pt}\headerfont\color{cvNameDark} \MakeUppercase{#1}}}
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{11pt}{14pt}\bodyfont\color{cvNameDark} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{8.5pt}{11pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{8.8pt}{11.5pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{8.7pt}{11.3pt}\bodyfont\color{cvBodyDark} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{cvMuted} #1}}
 \newcommand*{\sectionstyle}[1]{{%
-  \fontsize{11pt}{14pt}\bodyfont\bfseries\color{cvAccent}%
-  \textls*[50]{\MakeUppercase{#1}}}%
+  \fontsize{10.5pt}{12.5pt}\bodyfont\bfseries\color{cvAccent}%
+  \textls*[42]{\MakeUppercase{#1}}}%
 }
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{12.5pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{9pt}{11.5pt}\bodyfont\color{cvMuted} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8.5pt}{11.5pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.5pt}{11.5pt}\bodyfontlight\color{cvMuted} #1}}
-\newcommand*{\descriptionstyle}[1]{\justifying{\fontsize{8.8pt}{11.5pt}\bodyfont\upshape\color{cvBodyDark} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{9.8pt}{11.6pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{8.7pt}{10.8pt}\bodyfont\color{cvMuted} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8.3pt}{10.8pt}\bodyfontlight\color{cvMuted} #1}}
+\newcommand*{\descriptionstyle}[1]{{\RaggedRight\fontsize{8.7pt}{11.3pt}\bodyfont\upshape\color{cvBodyDark} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{9.5pt}{12pt}\bodyfont\bfseries\color{cvNameDark} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{12pt}\bodyfont\color{cvBodyDark} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{9.1pt}{11.3pt}\bodyfont\bfseries\color{cvNameDark} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{8.7pt}{11.3pt}\bodyfont\color{cvBodyDark} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -476,8 +482,9 @@
 \newcommand{\cvsection}[1]{%
   \vspace{\acvSectionTopSkip}%
   \sectionstyle{#1}\par%
-  \vspace{0.8mm}%
+  \vspace{0.6mm}%
   {\color{cvRule}\rule{\linewidth}{0.4pt}}\par%
+  \vspace{0.6mm}%
   \phantomsection%
 }
 
@@ -486,8 +493,7 @@
 \newcommand*{\makesummarysection}{%
   \ifthenelse{\isundefined{\@quote}}{}{%
     \cvsection{Professional Summary}%
-    \par\vspace{0.4mm}%
-    {\headerquotestyle{\justifying\@quote}\par}%
+    {\headerquotestyle{\RaggedRight\@quote}\par}%
   }%
 }
 
@@ -528,7 +534,7 @@
 %       \ifstrempty (from etoolbox) is used instead of \ifempty because it is
 %       long-safe, allowing \par tokens in its branches.
 \newcommand{\cventry}[4]{%
-  \par\vspace{1.8mm}\noindent
+  \par\vspace{2.15mm}\noindent
   {\entrytitlestyle{#1}}\par\noindent
   \ifstrempty{#2}{%
     \ifstrempty{#3}{}{{\entrydatestyle{#3}}\par}%
@@ -537,7 +543,7 @@
     \ifstrempty{#3}{}{\ {\entrydatestyle{\textbar\ #3}}}%
     \par
   }%
-  \ifstrempty{#4}{}{\vspace{0.5mm}#4\par}%
+  \ifstrempty{#4}{}{\vspace{0.35mm}#4\par}%
 }
 
 
@@ -545,10 +551,10 @@
 % Define an environment for cvskill (inline paragraph style — narrow-column friendly)
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
-  \begin{justify}
-  \setlength{\parskip}{1mm}
+  \begingroup\RaggedRight
+  \setlength{\parskip}{0.8mm}
 }{%
-  \end{justify}
+  \par\endgroup
 }
 % Define a line of cv information(skill) — inline "Category: list" format
 % Explicit \hspace is used instead of \ because inter-group control spaces
@@ -562,13 +568,13 @@
 % Define an environment for cvitems(for cventry)
 % Moderate bullet spacing — enough for readability without wasting vertical space.
 \newenvironment{cvitems}{%
-  \vspace{-0.8mm}%
-  \begin{justify}%
-  \begin{itemize}[leftmargin=2.2ex, topsep=0.5mm, partopsep=0pt, itemsep=0.45mm, parsep=0pt]%
+  \vspace{-0.45mm}%
+  \begingroup\RaggedRight%
+  \begin{itemize}[leftmargin=1.7ex, topsep=0.45mm, partopsep=0pt, itemsep=0.5mm, parsep=0pt]%
     \setlength{\parskip}{0pt}%
     \renewcommand{\labelitemi}{\textbullet}%
 }{%
   \end{itemize}%
-  \end{justify}%
-  \vspace{-0.5mm}%
+  \par\endgroup%
+  \vspace{-0.25mm}%
 }
