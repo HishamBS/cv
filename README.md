@@ -2,7 +2,7 @@
 
 # Hisham Bin Seddeq
 
-### Lead Software Engineer &nbsp;·&nbsp; AI / ML &nbsp;·&nbsp; Full-Stack
+### Principal Engineer &nbsp;·&nbsp; AI / ML &nbsp;·&nbsp; Full-Stack
 
 *Architecting enterprise-scale AI platforms, computer vision systems, and agentic AI products.*
 
